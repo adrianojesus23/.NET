@@ -9,6 +9,6 @@ namespace App
     public class Livro
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name3 { get; set; }
     }
 }
