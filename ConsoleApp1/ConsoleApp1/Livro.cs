@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace App
 {
-    internal class Livro
+    public class Livro
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
