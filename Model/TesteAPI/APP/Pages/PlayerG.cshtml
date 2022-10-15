@@ -1,0 +1,71 @@
+﻿@page
+@model APP.Pages.PlayerGModel
+@{
+    ViewData["Title"] = "Player";
+}
+<!DOCTYPE html>
+  <html>
+    <head>
+     <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+
+          <!-- Navbar goes here -->
+
+    <!-- Page Layout here -->
+    <div class="row">
+        
+      <div class="col s3">
+        <div class="collection">
+             <div class="progress">
+      <div class="indeterminate"></div>
+      </div>
+
+      <div class="col s9">
+      </div>
+         <h2>New Player Info</h2> 
+      <p class="collection-item">Name: @Model.player.Name</p>
+    <p class="collection-item">Gender: @Model.player.Gender</p>
+    <p  class="collection-item">Race: @Model.player.Race</p>
+    <p  class="collection-item">Age: @Model.player.Age</p>
+    <p  class="collection-item">Hair Color: @Model.player.HairColor</p>
+    <p  class="collection-item">Strength: @Model.player.Strength</p>
+      
+      </div>
+      </div>
+
+
+      <hr />
+      <div>
+          <form method="post" enctype="multipart/form-data" asp-controller="FileUpload" asp-action="Index">
+    <div class="form-group">
+        <div class="col-md-10">
+            <p>Upload one or more files using this form:</p>
+            <input type="file" name="files" multiple />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Upload" />
+        </div>
+    </div>
+</form>
+      </div>
+
+    </div>
+
+        
+  
+      <!--JavaScript at end of body for optimized loading-->
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+    </body>
+  </html>
+    

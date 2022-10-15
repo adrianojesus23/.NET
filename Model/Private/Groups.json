@@ -1,0 +1,695 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Groups",
+    "version": "1.0",
+    "description": "groups api spec"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/rwapi/groups": {
+      "get": {
+        "summary": "get / search groups",
+        "tags": [
+          "groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupViewModelSearch"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-rwapi-groups",
+        "parameters": [
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "onlyInternet"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "onlyEnabled"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "onlySpecial"
+          }
+        ]
+      },
+      "post": {
+        "summary": "create group",
+        "operationId": "post-rwapi-groups",
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupViewModelCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "groups"
+        ]
+      }
+    },
+    "/rwapi/groups/{id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "get group by id",
+        "tags": [
+          "groups"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GroupViewModel"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-rwapi-groups-id"
+      },
+      "put": {
+        "summary": "update group",
+        "operationId": "put-rwapi-groups-id",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupViewModelUpdate"
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "groups"
+        ]
+      },
+      "delete": {
+        "summary": "delete group",
+        "operationId": "delete-rwapi-groups-id",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFound"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "groups"
+        ]
+      }
+    },
+    "/rwapi/groups/{id}/upgrades": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "get group upgrades",
+        "tags": [
+          "group upgrades"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupUpgradeViewModel"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-rwapi-groups-id-upgrades",
+        "description": ""
+      },
+      "post": {
+        "summary": "insert group upgrades",
+        "operationId": "post-rwapi-groups-id-upgrades",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "tags": [
+          "group upgrades"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GroupUpgradeViewModelCreate"
+                }
+              }
+            }
+          }
+        },
+        "description": "Notes for backend: always validate that the same entity is not being inserted. Although the legacy app allows, we will not allow the same group to be inserted for itself."
+      }
+    },
+    "/rwapi/groups/{id}/upgrades/available": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "get available upgrades for a group",
+        "tags": [
+          "group upgrades"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupUpgradeAvailableViewModel"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "operationId": "get-rwapi-groups-id-upgrades-available",
+        "description": "this service returns the available upgrades for the requested group, already filtered by the existing ones"
+      }
+    },
+    "/rwapi/groups/sorting": {
+      "get": {
+        "summary": "get groups sorting order",
+        "tags": [
+          "groups sorting"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GroupSortingViewModel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-rwapi-groups-sorting",
+        "description": ""
+      },
+      "parameters": [],
+      "post": {
+        "summary": "process groups sorting order",
+        "operationId": "post-rwapi-groups-sorting",
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GroupSortingViewModelCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "groups sorting"
+        ],
+        "description": "WARNING FOR BACKEND: this service receives an array containing the groupId and the new sorting order.\n\nthis process SHOULD NOT delete the existing data in the table, as this information can be partial or complete. the API should create a process to update each and every group id and their related upgrade (check documentation for details)"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GroupViewModel": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sipp": {
+            "type": "string"
+          },
+          "excess": {
+            "$ref": "#/components/schemas/GroupExcessViewModel"
+          },
+          "isSpecial": {
+            "type": "boolean"
+          },
+          "isInternet": {
+            "type": "boolean"
+          },
+          "isElectricHybrid": {
+            "type": "boolean"
+          },
+          "isDisabled": {
+            "type": "boolean"
+          },
+          "minimumAge": {
+            "type": "integer"
+          },
+          "maximumAge": {
+            "type": "integer"
+          },
+          "minimumLicenseAge": {
+            "type": "integer"
+          },
+          "sortingOrder": {
+            "type": "integer"
+          },
+          "vehicleSegmentId": {
+            "type": "integer"
+          },
+          "vehicleSegmentName": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "croquiId": {
+            "type": "integer"
+          },
+          "croquiName": {
+            "type": "string"
+          },
+          "brandId": {
+            "type": "integer"
+          },
+          "brandName": {
+            "type": "string"
+          },
+          "modelVersionId": {
+            "type": "integer"
+          },
+          "modelName": {
+            "type": "string"
+          },
+          "versionName": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "GroupViewModelCreate": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sipp": {
+            "type": "string"
+          },
+          "excess": {
+            "$ref": "#/components/schemas/GroupExcessViewModel"
+          },
+          "isSpecial": {
+            "type": "boolean"
+          },
+          "isInternet": {
+            "type": "boolean"
+          },
+          "isElectricHybrid": {
+            "type": "boolean"
+          },
+          "isDisabled": {
+            "type": "boolean"
+          },
+          "minimumAge": {
+            "type": "integer"
+          },
+          "maximumAge": {
+            "type": "integer"
+          },
+          "minimumLicenseAge": {
+            "type": "integer"
+          },
+          "sortingOrder": {
+            "type": "integer"
+          },
+          "vehicleSegmentId": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "croquiId": {
+            "type": "integer"
+          },
+          "brandId": {
+            "type": "integer"
+          },
+          "modelVersionId": {
+            "type": "integer"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "GroupViewModelUpdate": {
+        "type": "object",
+        "description": "",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "sipp": {
+            "type": "string"
+          },
+          "excess": {
+            "$ref": "#/components/schemas/GroupExcessViewModel"
+          },
+          "isSpecial": {
+            "type": "boolean"
+          },
+          "isInternet": {
+            "type": "boolean"
+          },
+          "isElectricHybrid": {
+            "type": "boolean"
+          },
+          "isDisabled": {
+            "type": "boolean"
+          },
+          "minimumAge": {
+            "type": "integer"
+          },
+          "maximumAge": {
+            "type": "integer"
+          },
+          "minimumLicenseAge": {
+            "type": "integer"
+          },
+          "sortingOrder": {
+            "type": "integer"
+          },
+          "vehicleSegmentId": {
+            "type": "integer"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "croquiId": {
+            "type": "integer"
+          },
+          "brandId": {
+            "type": "integer"
+          },
+          "modelVersionId": {
+            "type": "integer"
+          },
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "GroupViewModelSearch": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sipp": {
+            "type": "string"
+          },
+          "sortingOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "GroupExcessViewModel": {
+        "title": "GroupExcessViewModel",
+        "type": "object",
+        "properties": {
+          "withoutCdw": {
+            "type": "integer"
+          },
+          "withCdw": {
+            "type": "integer"
+          },
+          "withScdw": {
+            "type": "integer"
+          },
+          "withoutTp": {
+            "type": "integer"
+          },
+          "withTp": {
+            "type": "integer"
+          },
+          "withoutStp": {
+            "type": "integer"
+          },
+          "withoutPartialCdw": {
+            "type": "integer"
+          },
+          "withoutOptional": {
+            "type": "integer"
+          },
+          "withOptional": {
+            "type": "integer"
+          }
+        }
+      },
+      "GroupSortingViewModel": {
+        "title": "GroupSortingViewModel",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "sortingOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "GroupSortingViewModelCreate": {
+        "title": "GroupSortingViewModelCreate",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "sortingOrder": {
+            "type": "integer"
+          }
+        }
+      },
+      "GroupUpgradeViewModel": {
+        "title": "GroupUpgradeViewModel",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "sipp": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "upgradeType": {
+            "type": "string",
+            "enum": [
+              "upgrade",
+              "downgrade",
+              "equal"
+            ]
+          }
+        }
+      },
+      "GroupUpgradeViewModelCreate": {
+        "title": "GroupUpgradeViewModelCreate",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          }
+        }
+      },
+      "GroupUpgradeAvailableViewModel": {
+        "title": "GroupUpgradeAvailableViewModel",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "NotFound": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "traceId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {}
+  },
+  "tags": [
+    {
+      "name": "group upgrades"
+    },
+    {
+      "name": "groups"
+    },
+    {
+      "name": "groups sorting"
+    }
+  ]
+}
