@@ -21,6 +21,11 @@ namespace App
 
         public Book GetBookById(int id)
         {
+            return (Book)GetList.GetLists().FirstOrDefault(x=>x.Id == id);
+        }
+
+        public static explicit operator Book(BookBase? v)
+        {
             throw new NotImplementedException();
         }
     }
